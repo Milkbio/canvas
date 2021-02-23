@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<canvas id="canvas" width="600" height="600"></canvas>
+<script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    let radialGradient;
+
+    let angle = 0.1;
+    let scope = 20;
+
+    let x = 300;
+    let y = 100;
+    let r = 20;
+
+    const draw = (axisX) => {
+        ctx.clearRect(0, 0, 600, 600);
+        radialGradient = ctx.createRadialGradient(x, y, 10, x, y, r);
+        radialGradient.addColorStop(0, "#FFFFFF");
+        radialGradient.addColorStop(1, "#EA7F26");
+        ctx.fillStyle = radialGradient;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.arc(x, y, r, 0, 2 * Math.PI, false);
+        ctx.fill();
+
+        x = x + Math.cos(angle) * scope;
+        y = y + Math.sin(angle) * scope;
+        angle = angle + .1;
+
+        requestAnimationFrame(draw);
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.arc(300, 300, 200, 0, 2 * Math.PI, false);
+        ctx.stroke();
+    }
+
+    draw()
+</script>
+</body>
+</html>
